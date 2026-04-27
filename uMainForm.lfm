@@ -1,0 +1,281 @@
+object FormMain: TFormMain
+  Left = 120
+  Height = 780
+  Top = 60
+  Width = 1200
+  Caption = 'H2Pas Converter  -  .h vers .pas / .py  (cdecl)'
+  ClientHeight = 780
+  ClientWidth = 1200
+  OnCreate = FormCreate
+  LCLVersion = '4.0'
+  object MainMenu1: TMainMenu
+    Left = 8
+    Top = 4
+    object MenuFichier: TMenuItem
+      Caption = '&Fichier'
+      object MenuSauver: TMenuItem
+        Caption = '&Sauvegarder...'
+        Enabled = False
+        OnClick = MenuSauverClick
+      end
+      object MenuSep1: TMenuItem
+        Caption = '-'
+      end
+      object MenuQuitter: TMenuItem
+        Caption = '&Quitter'
+        OnClick = MenuQuitterClick
+      end
+    end
+    object MenuAide: TMenuItem
+      Caption = '&Aide'
+      object MenuAPropos: TMenuItem
+        Caption = '&A propos...'
+        OnClick = MenuAProposClick
+      end
+    end
+  end
+  object PanelParams: TPanel
+    Left = 0
+    Height = 60
+    Top = 0
+    Width = 1200
+    Align = alTop
+    BevelOuter = bvNone
+    Caption = ''
+    ClientHeight = 60
+    ClientWidth = 1200
+    object LblFichierH: TLabel
+      Left = 8
+      Height = 18
+      Top = 20
+      Width = 58
+      Caption = 'Fichier .h :'
+    end
+    object FileEditH: TFileNameEdit
+      Left = 72
+      Height = 26
+      Top = 17
+      Width = 320
+      DialogTitle = 'Selectionner un fichier header C'
+      Filter = 'Fichiers Header C (*.h)|*.h|Tous les fichiers (*.*)|*.*'
+      ButtonWidth = 28
+      OnChange = FileEditHChange
+      OnAcceptFileName = FileEditHAcceptFileName
+    end
+    object LblDLL: TLabel
+      Left = 402
+      Height = 18
+      Top = 20
+      Width = 28
+      Caption = 'DLL :'
+    end
+    object EditDLL: TEdit
+      Left = 436
+      Height = 26
+      Top = 17
+      Width = 150
+      Text = 'malib.dll'
+      OnChange = EditDLLChange
+    end
+    object LblUnit: TLabel
+      Left = 596
+      Height = 18
+      Top = 20
+      Width = 38
+      Caption = 'Unite :'
+    end
+    object EditUnit: TEdit
+      Left = 640
+      Height = 26
+      Top = 17
+      Width = 160
+      Text = 'uMaLibBinding'
+      OnChange = EditUnitChange
+    end
+    object RGLangage: TRadioGroup
+      Left = 812
+      Height = 54
+      Top = 3
+      Width = 190
+      Caption = 'Langage cible'
+      ItemIndex = 0
+      Items.Strings = (
+        'Pascal (FPC)'
+        'Python (ctypes)'
+      )
+      OnClick = RGLangageClick
+    end
+    object BtnConvertirMain: TBitBtn
+      Left = 1012
+      Height = 34
+      Top = 13
+      Width = 120
+      Caption = 'CONVERTIR'
+      Enabled = False
+      Kind = bkCustom
+      OnClick = BtnConvertirMainClick
+    end
+    object BtnEffacer: TBitBtn
+      Left = 1140
+      Height = 34
+      Top = 13
+      Width = 52
+      Caption = 'Effacer'
+      Kind = bkCustom
+      OnClick = BtnEffacerClick
+    end
+  end
+  object Splitter2: TSplitter
+    Left = 0
+    Height = 5
+    Top = 600
+    Width = 1200
+    Align = alBottom
+    ResizeStyle = rsUpdate
+  end
+  object PanelLog: TPanel
+    Left = 0
+    Height = 175
+    Top = 605
+    Width = 1200
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = ''
+    ClientHeight = 175
+    ClientWidth = 1200
+    object LblLog: TLabel
+      Left = 4
+      Height = 18
+      Top = 4
+      Width = 150
+      Caption = 'Journal de conversion :'
+    end
+    object MemoLog: TMemo
+      Left = 0
+      Height = 151
+      Top = 24
+      Width = 1200
+      Align = alBottom
+      Color = clBlack
+      Font.Color = clLime
+      Font.Name = 'Courier New'
+      Font.Height = -12
+      ReadOnly = True
+      ScrollBars = ssVertical
+      WordWrap = False
+    end
+  end
+  object PanelCentral: TPanel
+    Left = 0
+    Height = 540
+    Top = 60
+    Width = 1200
+    Align = alClient
+    BevelOuter = bvNone
+    Caption = ''
+    ClientHeight = 540
+    ClientWidth = 1200
+    object PanelSource: TPanel
+      Left = 0
+      Height = 540
+      Top = 0
+      Width = 580
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = ''
+      ClientHeight = 540
+      ClientWidth = 580
+      object LblSource: TLabel
+        Left = 4
+        Height = 18
+        Top = 4
+        Width = 220
+        Caption = 'Source .h (selectionne ou colle) :'
+      end
+      object MemoSource: TMemo
+        Left = 0
+        Height = 516
+        Top = 24
+        Width = 580
+        Align = alBottom
+        Font.Name = 'Courier New'
+        Font.Height = -12
+        ScrollBars = ssBoth
+        WordWrap = False
+      end
+    end
+    object Splitter1: TSplitter
+      Left = 580
+      Height = 540
+      Top = 0
+      Width = 5
+      ResizeStyle = rsUpdate
+    end
+    object PanelResult: TPanel
+      Left = 585
+      Height = 540
+      Top = 0
+      Width = 615
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = ''
+      ClientHeight = 540
+      ClientWidth = 615
+      object LblResult: TLabel
+        Left = 4
+        Height = 18
+        Top = 4
+        Width = 160
+        Caption = 'Resultat .pas genere :'
+      end
+      object BtnSauver: TBitBtn
+        Left = 460
+        Height = 22
+        Top = 1
+        Width = 150
+        Caption = 'Sauver le .pas...'
+        Enabled = False
+        Kind = bkCustom
+        OnClick = BtnSauverClick
+      end
+      object MemoResult: TMemo
+        Left = 0
+        Height = 516
+        Top = 24
+        Width = 615
+        Align = alBottom
+        Font.Name = 'Courier New'
+        Font.Height = -12
+        ScrollBars = ssBoth
+        WordWrap = False
+      end
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 24
+    Top = 756
+    Width = 1200
+    Panels = <
+      item
+        Width = 400
+        Text = 'Aucun fichier'
+      end
+      item
+        Width = 220
+        Text = 'DLL : malib.dll'
+      end
+      item
+        Width = 580
+        Text = 'Mode : Pascal FPC'
+      end>
+    SimplePanel = False
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = 'pas'
+    Filter = 'Fichiers Pascal (*.pas)|*.pas|Tous les fichiers (*.*)|*.*'
+    Title = 'Sauvegarder le fichier genere'
+    Left = 48
+    Top = 4
+  end
+end

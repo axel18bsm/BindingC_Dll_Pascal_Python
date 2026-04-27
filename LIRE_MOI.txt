@@ -1,0 +1,68 @@
+============================================================
+H2Pas Converter v1.0 — Convertisseur .h → .pas
+============================================================
+
+FICHIERS DU PROJET
+------------------
+H2PasConverter.lpr      → Programme principal (point d'entrée)
+H2PasConverter.lpi      → Fichier projet Lazarus (à ouvrir)
+uMainForm.pas           → Interface graphique (formulaire)
+uMainForm.lfm           → Layout du formulaire Lazarus
+uH2PasConverter.pas     → Moteur de conversion (logique pure)
+
+POUR OUVRIR ET COMPILER
+------------------------
+1. Ouvrir Lazarus
+2. Fichier → Ouvrir un projet...
+3. Sélectionner H2PasConverter.lpi
+4. F9 (ou Exécuter → Compiler et exécuter)
+
+UTILISATION
+-----------
+1. Collez le contenu de votre .h dans la zone gauche
+   (ou Fichier → Ouvrir un .h)
+2. Entrez le nom exact de la DLL (ex: guvacode.dll)
+3. Entrez le nom de l'unité Pascal souhaitée (ex: uGuvacode)
+4. Cliquez CONVERTIR
+5. Vérifiez le résultat dans la zone droite
+6. Fichier → Sauvegarder le .pas
+
+CE QUE LE CONVERTISSEUR FAIT
+------------------------------
+✓ Supprimer les commentaires C (/* */ et //)
+✓ Supprimer les gardes d'inclusion (#ifndef etc.)
+✓ Convertir les #define numériques en const Pascal
+✓ Convertir les typedef struct en packed record Pascal
+✓ Convertir les typedef enum en LongInt + constantes
+✓ Détecter les handles opaques (struct Foo_t*)
+✓ Convertir les prototypes de fonctions avec cdecl
+✓ Mapper les types C → Pascal (int, char*, float, etc.)
+✓ Générer les directives {$mode objfpc}{$H+}{$PACKRECORDS C}
+✓ Ajouter external 'dll.dll' name '...' sur chaque fonction
+
+LIMITES (vérification manuelle nécessaire)
+-------------------------------------------
+⚠ Les macros complexes (#define avec expressions) → ignorées
+⚠ Les callbacks (pointeurs de fonctions) → Pointer (TODO)
+⚠ Les unions C → traduits comme des records (à vérifier)
+⚠ Les types inconnus → préfixés T... avec avertissement dans le log
+⚠ Les varargs (...) → commentaire {varargs} dans les paramètres
+⚠ Les #ifdef condionnels complexes → ignorés
+
+TYPES C → PASCAL (référence rapide)
+-------------------------------------
+int          → LongInt
+unsigned int → LongWord
+int32_t      → LongInt
+uint32_t     → LongWord
+int64_t      → Int64
+float        → Single
+double       → Double
+char*        → PAnsiChar
+wchar_t*     → PWideChar
+void*        → Pointer
+bool         → ByteBool
+BOOL         → LongBool
+size_t       → PtrUInt
+
+============================================================
